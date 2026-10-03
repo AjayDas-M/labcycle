@@ -96,6 +96,14 @@ header form button {
     color: #00ea64;
 }
 
+/* visible keyboard focus for every button and link */
+button:focus-visible,
+a:focus-visible,
+input[type="checkbox"]:focus-visible {
+    outline: 2px solid #00ea64;
+    outline-offset: 2px;
+}
+
 /* ---------- main layout ---------- */
 
 main {
@@ -108,6 +116,7 @@ main {
 
 .lab-list {
     flex: 1;
+    min-width: 0; /* lets long titles shrink instead of overflowing */
 }
 
 .lab-list ul {
@@ -125,10 +134,17 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 15px;
     padding: 20px;
     background-color: #161b22;
     border: 1px solid #30363d;
     border-radius: 6px;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.lab-card:hover {
+    border-color: #00ea64;
+    background-color: #1a2029;
 }
 
 .lab-card h2 {
@@ -142,28 +158,115 @@ main {
     font-size: 14px;
 }
 
+/* difficulty: shared class + one class per level */
+.difficulty {
+    font-weight: bold;
+}
+
+.difficulty.easy {
+    color: #3fb950;
+}
+
+.difficulty.medium {
+    color: #e3b341;
+}
+
+.difficulty.hard {
+    color: #f85149;
+}
+
+/* ---------- card actions ---------- */
+
+.lab-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+/* status badge */
+.status {
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid;
+    font-size: 12px;
+}
+
+.status.solved {
+    color: #3fb950;
+    border-color: #3fb950;
+}
+
+.status.unsolved {
+    color: #8b949e;
+    border-color: #444;
+}
+
+/* star */
+.star-btn {
+    color: #8b949e;
+    font-size: 22px;
+    line-height: 1;
+}
+
+.star-btn:hover {
+    color: #e3b341;
+}
+
 .solve-btn {
     background-color: #00ea64;
     color: #0E141E;
     padding: 8px 20px;
     border-radius: 4px;
     font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.solve-btn:hover {
+    background-color: #00c853;
 }
 
 /* ---------- filters sidebar ---------- */
 
 .filters {
     width: 240px;
+    flex-shrink: 0;
+}
+
+.filters h2 {
+    margin: 0 0 15px;
+    font-size: 18px;
 }
 
 .filters fieldset {
     border: 1px solid #30363d;
+    border-radius: 6px;
     margin: 0 0 15px;
+    padding: 10px 15px 15px;
+}
+
+.filters legend {
+    padding: 0 8px;
+    color: #8b949e;
 }
 
 .filters label {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 8px;
     padding: 4px 0;
+    cursor: pointer;
+}
+
+.filters label:hover {
+    color: #00ea64;
+}
+
+.empty-message {
+    padding: 20px;
+    color: #8b949e;
+    border: 1px dashed #30363d;
+    border-radius: 6px;
 }
 
 /* ---------- responsive (keep LAST) ---------- */
@@ -176,6 +279,20 @@ main {
 
     header form {
         width: 150px;
+    }
+
+    /* sidebar moves above the list, card actions wrap under the info */
+    main {
+        flex-direction: column-reverse;
+    }
+
+    .filters {
+        width: 100%;
+    }
+
+    .lab-card {
+        flex-direction: column;
+        align-items: flex-start;
     }
 
 }

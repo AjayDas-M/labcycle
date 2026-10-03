@@ -34,36 +34,27 @@
         <main>
             <section class="lab-list">
                 <h1>C Programming Labs</h1>
-                <ul>
-                    <li>
-                        <article class="lab-card">
-                            <div class="lab-info">
-                                <h2>Hello World</h2>
-                                <p class="meta">Easy | Max Score: 10 | LAB 1</p>
-                            </div>
-                            <div class="lab-actions">
-                                <button type="button" class="solve-btn">Solve</button>
-                            </div>
-                        </article>
-                    </li>
-                </ul>
+                <ul id="lab-list"></ul>
+                <p id="empty-message" class="empty-message" hidden>No labs match filters.</p>
             </section>
 
             <aside class="filters">
                 <h2>Filters</h2>
                 <fieldset>
                     <legend>Status</legend>
-                    <label><input type="checkbox"> Solved</label>
-                    <label><input type="checkbox"> Unsolved</label>
+                    <label><input type="checkbox" data-filter="status" value="solved"> Solved</label>
+                    <label><input type="checkbox" data-filter="status" value="unsolved"> Unsolved</label>
                 </fieldset>
 
                 <fieldset>
                     <legend>Difficulty</legend>
-                    <label><input type="checkbox"> Easy</label>
-                    <label><input type="checkbox"> Medium</label>
-                    <label><input type="checkbox"> Hard</label>
+                    <label><input type="checkbox" data-filter="difficulty" value="easy"> Easy</label>
+                    <label><input type="checkbox" data-filter="difficulty" value="medium"> Medium</label>
+                    <label><input type="checkbox" data-filter="difficulty" value="hard"> Hard</label>
                 </fieldset>
             </aside>
         </main>
+        <script src="js/labs.js" defer></script>
+        <script src="js/app.js" defer></script>
     </body>
 </html>
