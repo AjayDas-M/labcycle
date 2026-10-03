@@ -42,7 +42,13 @@ function createLabCard(lab) {
     star.type = "button";
     star.className = "star-btn";
     star.setAttribute("aria-label", `Bookmark ${lab.title}`);
-    star.textContent = "☆";
+    paintStar(star, bookmarks.has(lab.id));
+
+    star.addEventListener("click", () => {
+    paintStar(star, toggleBookmark(lab.id));
+    // "Bookmarked only" on: card must vanish now
+    if (getSelected("bookmark").length > 0) applyFilters();
+    });
 
     const solve = document.createElement("button");
     solve.type = "button";
