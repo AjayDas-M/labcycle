@@ -212,6 +212,9 @@ main {
 .star-btn:hover {
     color: #e3b341;
 }
+.star-btn.active {
+    color: #e3b341;
+}
 
 .solve-btn {
     background-color: #00ea64;

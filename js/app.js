@@ -1,7 +1,10 @@
 const labListEl = document.querySelector("#lab-list");
 const emptyEl = document.querySelector("#empty-message");
 const filterInputs = document.querySelectorAll("[data-filter]");
+const searchEl = document.querySelector("#search");
 
+// Enter key must not reload page
+searchEl.closest("form").addEventListener("submit", e => e.preventDefault());
 // Build one <li> card from one lab object.
 // textContent / append(string) only: data never parsed as HTML (no XSS).
 function createLabCard(lab) {
@@ -69,18 +72,63 @@ function getSelected(group) {
 function applyFilters() {
     const statuses = getSelected("status");
     const difficulties = getSelected("difficulty");
+    const query = searchEl.value.trim().toLowerCase();
+    const bookmarkOnly = getSelected("bookmark").length > 0;
 
     const result = labs.filter(lab => {
         const statusOk = statuses.length === 0 ||
             statuses.includes(lab.solved ? "solved" : "unsolved");
         const difficultyOk = difficulties.length === 0 ||
             difficulties.includes(lab.difficulty.toLowerCase());
-        return statusOk && difficultyOk;
+        const searchOk = lab.title.toLowerCase().includes(query);
+        const bookmarkOk = !bookmarkOnly || bookmarks.has(lab.id);
+        return statusOk && difficultyOk && searchOk && bookmarkOk;
+        
     });
 
     renderLabs(result);
 }
 
 filterInputs.forEach(input => input.addEventListener("change", applyFilters));
+searchEl.addEventListener("input", applyFilters);
+const STORAGE_KEY = "labcycle:bookmarks";
+
+// localStorage is user-editable: never trust it. Validate shape, catch errors.
+function loadBookmarks() {
+    try {
+        const raw = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        return new Set(Array.isArray(raw) ? raw.filter(Number.isInteger) : []);
+    } catch {
+        return new Set(); // bad JSON or storage blocked
+    }
+}
+
+function saveBookmarks() {
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify([...bookmarks]));
+    } catch {
+        // storage full or blocked: app still works, just no memory
+    }
+}
+
+const bookmarks = loadBookmarks();
+
+// Flip bookmark for one lab id. Returns new state.
+function toggleBookmark(id) {
+    if (bookmarks.has(id)) {
+        bookmarks.delete(id);
+    } else {
+        bookmarks.add(id);
+    }
+    saveBookmarks();
+    return bookmarks.has(id);
+}
+
+// Sync star look with state.
+function paintStar(star, marked) {
+    star.textContent = marked ? "★" : "☆";
+    star.classList.toggle("active", marked);
+    star.setAttribute("aria-pressed", String(marked));
+}
 
 applyFilters(); // first draw
