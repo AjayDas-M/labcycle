@@ -2,6 +2,9 @@
 
 <html lang="en">
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>labcycle tracker</title>
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
@@ -11,7 +14,7 @@
 
             <!--navigation-->
             <nav>
-                <a href="#" class="active">DashBoard</a>
+                <a href="#" class="active">Dashboard</a>
                 <a href="#">Problems</a>
             </nav>
             <!--search-->
@@ -19,13 +22,48 @@
                 <input type="search" placeholder="Search">
                 <button type="submit">🔍</button>
             </form>
-            
+
             <div class="icon">
                 <!--notification-->
                 <button type="button" aria-label="Notification">🔔</button>
-                 <!--profile-->
-                 <button type="button" aria-label="Profile">👤</button>
+                <!--profile-->
+                <button type="button" aria-label="Profile">👤</button>
             </div>
         </header>
+
+        <main>
+            <section class="lab-list">
+                <h1>C Programming Labs</h1>
+                <ul>
+                    <li>
+                        <article class="lab-card">
+                            <div class="lab-info">
+                                <h2>Hello World</h2>
+                                <p class="meta">Easy | Max Score: 10 | LAB 1</p>
+                            </div>
+                            <div class="lab-actions">
+                                <button type="button" class="solve-btn">Solve</button>
+                            </div>
+                        </article>
+                    </li>
+                </ul>
+            </section>
+
+            <aside class="filters">
+                <h2>Filters</h2>
+                <fieldset>
+                    <legend>Status</legend>
+                    <label><input type="checkbox"> Solved</label>
+                    <label><input type="checkbox"> Unsolved</label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Difficulty</legend>
+                    <label><input type="checkbox"> Easy</label>
+                    <label><input type="checkbox"> Medium</label>
+                    <label><input type="checkbox"> Hard</label>
+                </fieldset>
+            </aside>
+        </main>
     </body>
 </html>
